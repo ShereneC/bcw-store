@@ -5,11 +5,14 @@ import TagService from '../services/TagService'
 let _tagService = new TagService().repository
 let _apparelService = new ApparelService().repository
 
-//NOTE this controller route is under '/api/tag'
+// (validateTagArray) create method to iterate over tags and check for duplicate tags
+
+//NOTE this controller route is under '/api/tags'
 export default class TagController {
   constructor() {
     this.router = express.Router()
       .get('', this.getAllTag)
+      .get('/:tagId/apparel', this.getApparelByTagId)
       .post('', this.addTag)
       .put('/:tagId', this.editTag)
       .delete('/:tagId', this.deleteTag)
@@ -33,7 +36,7 @@ export default class TagController {
   }
   async getApparelByTagId(req, res, next) {
     try {
-      let apparel = await _apparelService.find({ tag: req.params.tagId })
+      let apparel = await _apparelService.find({ tags: req.params.tagId })
       return res.send(apparel)
     } catch (error) {
       next(error)
@@ -41,6 +44,7 @@ export default class TagController {
   }
   async addTag(req, res, next) {
     try {
+      //validateTagArray
       let newTag = await _tagService.create(req.body)
       return res.send(newTag)
     } catch (error) {
@@ -50,6 +54,7 @@ export default class TagController {
 
   async editTag(req, res, next) {
     try {
+      //validateTagArray
       let editedTag = await _tagService.findOneAndUpdate({ _id: req.params.tagId }, req.body, { new: true })
       return res.send(editedTag)
     } catch (error) {
