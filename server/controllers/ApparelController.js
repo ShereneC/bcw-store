@@ -15,7 +15,7 @@ export default class ApparelController {
 
   async getAllApparel(req, res, next) {
     try {
-      let apparel = await _apparelService.find({})
+      let apparel = await _apparelService.find({}).populate("manufacturer")
       return res.send(apparel)
     } catch (error) {
       next(error)
@@ -23,7 +23,7 @@ export default class ApparelController {
   }
   async getApparelById(req, res, next) {
     try {
-      let apparel = await _apparelService.findById(req.params.apparelId)
+      let apparel = await _apparelService.findById(req.params.apparelId).populate("manufacturer")
       return res.send(apparel)
     } catch (error) {
       next(error)
