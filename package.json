@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-    // NOTE he has "start": "index.js",  do I need that?
   },
   "author": "ShereneC",
   "license": "ISC",
