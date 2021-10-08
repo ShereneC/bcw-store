@@ -1,13 +1,16 @@
 import express from 'express'
+import ApparelService from '../services/ApparelService'
 import ManufacturerService from '../services/ManufacturerService'
 
 let _manufacturerService = new ManufacturerService().repository
+let _apparelService = new ApparelService().repository
 
 export default class ManufacturerController {
   constructor() {
     this.router = express.Router()
       .get('', this.getAllManufacturer)
       .get('/:manufacturerId', this.getManufacturerById)
+      .get('/:manufacturerId/apparel', this.getApparelByManufacturerId)
       .post('', this.addManufacturer)
       .put('/:manufacturerId', this.editManufacturer)
       .delete('/:manufacturerId', this.deleteManufacturer)
@@ -25,6 +28,14 @@ export default class ManufacturerController {
     try {
       let manufacturer = await _manufacturerService.findById(req.params.manufacturerId)
       return res.send(manufacturer)
+    } catch (error) {
+      next(error)
+    }
+  }
+  async getApparelByManufacturerId(req, res, next) {
+    try {
+      let apparel = await _apparelService.find({ manufacturer: req.params.manufacturerId })
+      return res.send(apparel)
     } catch (error) {
       next(error)
     }
