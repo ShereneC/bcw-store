@@ -8,7 +8,8 @@ const _model = new Schema({
   description: { type: String },
   price: { type: Number, required: true },
   stock: { type: Number, default: 0 },
-  manufacturer: { type: ObjectId, ref: "manufacturer", required: true, default: null }
+  manufacturer: { type: ObjectId, ref: "manufacturer", required: true, default: null },
+  tags: [{ type: ObjectId, ref: "tag" }]
 })
 
 

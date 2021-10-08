@@ -15,7 +15,9 @@ export default class ApparelController {
 
   async getAllApparel(req, res, next) {
     try {
-      let apparel = await _apparelService.find({}).populate("manufacturer")
+      let apparel = await _apparelService.find({})
+        .populate("manufacturer")
+        .populate("tags")
       return res.send(apparel)
     } catch (error) {
       next(error)
@@ -32,7 +34,7 @@ export default class ApparelController {
   async addApparel(req, res, next) {
     try {
       let newApparel = await _apparelService.create(req.body)
-      return res.send(apparel)
+      return res.send(newApparel)
     } catch (error) {
       next(error)
     }
